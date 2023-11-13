@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('user__video_games', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class, 'id_user');
-            $table->foreignIdFor(\App\Models\VideoGame::class, 'id_videogame');
+            $table->unsignedBiginteger('video_games_id')->unsigned();
+            $table->unsignedBiginteger('users_id')->unsigned();
+
+            $table->foreign('video_games_id')->references('id')
+                ->on('video_games')->onDelete('cascade');
+            $table->foreign('users_id')->references('id')
+                ->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
